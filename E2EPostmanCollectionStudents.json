@@ -1,0 +1,177 @@
+{
+	"info": {
+		"_postman_id": "5491e84b-643a-4514-b3d6-c2ca2eeab002",
+		"name": "End to End DB Operations",
+		"description": "Adding new data to my db\nVerifying data is added successfully\nUpdating data to db\nVerifying data is updated successfully\nDeleting data\nVerifying data deleted",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Adding Record to Database",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": \"1111\",\n  \"title\": \"Testing World Updated\",\n  \"author\": \"TW Author\",\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/posts",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verify Data Added Successfully",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Testing World\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/posts/11",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"posts",
+						"11"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update record on server",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": \"11\",\n  \"title\": \"Testing World Updated\",\n  \"author\": \"TW Author\",\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/posts/11",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"posts",
+						"11"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verify Data Updated",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Testing World Updated\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/posts/11",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"posts",
+						"11"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Record",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/posts/11",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"posts",
+						"11"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verify Delete Data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/posts/11",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"posts",
+						"11"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
